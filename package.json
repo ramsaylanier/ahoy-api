@@ -1,0 +1,43 @@
+{
+  "name": "emojinate-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "babel-node server.js",
+    "start:watch": "nodemon --exec npm run start"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.4.8",
+    "auth0": "^2.16.0",
+    "config": "^3.0.1",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2",
+    "jsonwebtoken": "^8.4.0",
+    "jwt-decode": "^2.2.0",
+    "knex": "^0.16.3",
+    "node-fetch": "^2.3.0",
+    "objection": "^1.4.0",
+    "pg": "^7.7.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/preset-env": "^7.2.3",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-import-graphql": "^2.6.2",
+    "eslint": "^5.10.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.15.3"
+  }
+}
