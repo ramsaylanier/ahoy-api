@@ -14,8 +14,8 @@ type Project {
   owner: User
   admins: [User]
   members: [User]
-  createdAt: String
-  updatedAt: String
+  created_at: String
+  updated_at: String
 }
 
 type Task {
@@ -29,7 +29,7 @@ type Task {
 }
 
 type Query {
-  user(id: String!): User
+  user(id: String): User
   projects(userId: String!): [Project]
   project(id: String!): Project
 }

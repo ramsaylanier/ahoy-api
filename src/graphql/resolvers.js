@@ -6,7 +6,7 @@ export default {
   Query: {
     projects: (_, { userId }) => getProjects(userId),
     project: (_, { id }) => getProject(id),
-    user: (_, { id }, context) => authApi.getUser(id)
+    user: (_, { id }, context) => authApi.getUser(id, context)
   },
   User: {
     projects: user => {

@@ -17,9 +17,10 @@ const normalizeUser = ({ user_id: id, ...rest }) => ({
 })
 
 const userApi = {
-  getUser: async id => {
+  getUser: async (id, context) => {
     try {
-      const user = await management.getUser({ id })
+      const userId = id || context.user.id
+      const user = await management.getUser({ userId })
       return normalizeUser(user)
     } catch (err) {
       throw err
