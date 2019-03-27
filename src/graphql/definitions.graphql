@@ -21,8 +21,8 @@ type Project {
 type Task {
   id: Int!
   title: String!
+  description: String!
   project: Project!
-  owner: User!
   created_at: String!
   completed: Boolean!
   completed_at: String
@@ -39,7 +39,14 @@ input ProjectInput {
   description: String!
 }
 
+input TaskInput {
+  title: String!
+  projectId: String!
+  description: String!
+}
+
 type Mutation {
-  createProject(project: ProjectInput): Project
+  createProject(project: ProjectInput!): Project
+  createTask(task: TaskInput!): Task
   inviteUser(projectId: String!, email: String!): Project
 }

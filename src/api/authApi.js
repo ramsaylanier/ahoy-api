@@ -31,7 +31,6 @@ const userApi = {
   getUsers: async (ids, context) => {
     try {
       let idsString = ids.join(' OR ')
-      console.log(idsString)
 
       const users = await management.getUsers({
         q: `user_id: ${idsString}`

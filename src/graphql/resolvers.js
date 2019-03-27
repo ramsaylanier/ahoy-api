@@ -1,5 +1,6 @@
 import '../database/db'
 import { getProjects, getProject, createProject } from '../database/projects'
+import { getTasks, createTask } from '../database/tasks'
 import authApi from '../api/authApi'
 
 export default {
@@ -13,10 +14,13 @@ export default {
   },
   Project: {
     owner: project => authApi.getUser(project.owner),
-    members: project => authApi.getUsers(project.members)
+    members: project =>
+      project.members ? authApi.getUsers(project.members) : [],
+    tasks: project => (project.tasks ? getTasks(project.tasks) : [])
   },
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),
+    createTask: (_, { task }, { user }) => createTask(task, user),
     inviteUser: (_, { projectId, email }, { user: owner }) =>
       authApi.inviteUser({ projectId, email, owner })
   }

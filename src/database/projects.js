@@ -1,6 +1,6 @@
 import { Model, raw } from 'objection'
 
-class Project extends Model {
+export class Project extends Model {
   $beforeInsert() {
     const now = new Date().toISOString()
     this.created_at = now
@@ -12,6 +12,19 @@ class Project extends Model {
   }
 
   static tableName = 'projects'
+  static relationMappings = () => {
+    const Task = require('./tasks').Task
+    return {
+      tasks: {
+        relation: Model.HasManyRelation,
+        modelClass: Task,
+        join: {
+          from: 'projects.id',
+          to: 'tasks.project_id'
+        }
+      }
+    }
+  }
 }
 
 export const getProjects = ownerId => {
