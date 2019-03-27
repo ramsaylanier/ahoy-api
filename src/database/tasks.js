@@ -57,7 +57,7 @@ export const createTask = async (task, user) => {
   }
 
   try {
-    const project = await getProject(task.projectId)
+    const project = await getProject(task.projectId, user.id)
     const newTask = await project
       .$relatedQuery('tasks')
       .insert(normalizeTask(task))

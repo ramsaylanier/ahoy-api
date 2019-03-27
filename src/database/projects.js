@@ -37,10 +37,19 @@ export const getProjects = ownerId => {
   }
 }
 
-export const getProject = id =>
-  Project.query()
+export const getProject = async (id, userId) => {
+  if (!userId) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  return Project.query()
     .where('id', id)
+    .andWhere(function() {
+      this.where('owner', userId)
+    })
     .first()
+}
 
 export const createProject = async (project, user) => {
   if (!user.id) {
@@ -60,6 +69,21 @@ export const addUserToProject = async (projectId, userId) => {
   return Project.query().updateAndFetchById(projectId, {
     members: raw('array_append(members, ?)', [userId])
   })
+}
+
+export const getProjectTasks = async (projectId, userId) => {
+  if (!userId) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  try {
+    const project = await getProject(projectId, userId)
+    const tasks = await project.$relatedQuery('tasks')
+    return tasks
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export default { getProjects, getProject }

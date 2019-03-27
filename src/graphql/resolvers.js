@@ -1,12 +1,17 @@
 import '../database/db'
-import { getProjects, getProject, createProject } from '../database/projects'
-import { getTasks, createTask } from '../database/tasks'
+import {
+  getProjects,
+  getProject,
+  createProject,
+  getProjectTasks
+} from '../database/projects'
+import { createTask } from '../database/tasks'
 import authApi from '../api/authApi'
 
 export default {
   Query: {
     projects: (_, { userId }) => getProjects(userId),
-    project: (_, { id }) => getProject(id),
+    project: (_, { id }, context) => getProject(id, context.user.id),
     user: (_, { id }, context) => authApi.getUser(id, context)
   },
   User: {
@@ -16,7 +21,9 @@ export default {
     owner: project => authApi.getUser(project.owner),
     members: project =>
       project.members ? authApi.getUsers(project.members) : [],
-    tasks: project => (project.tasks ? getTasks(project.tasks) : [])
+    tasks: (project, args, context) => {
+      return getProjectTasks(project.id, context.user.id)
+    }
   },
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),
