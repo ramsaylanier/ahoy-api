@@ -9,12 +9,15 @@ export default {
     user: (_, { id }, context) => authApi.getUser(id, context)
   },
   User: {
-    projects: user => {
-      return getProjects(user.id)
-    }
+    projects: user => getProjects(user.id)
   },
-  Project: {},
+  Project: {
+    owner: project => authApi.getUser(project.owner),
+    members: project => authApi.getUsers(project.members)
+  },
   Mutation: {
-    createProject: (_, { project }, { user }) => createProject(project, user)
+    createProject: (_, { project }, { user }) => createProject(project, user),
+    inviteUser: (_, { projectId, email }, { user: owner }) =>
+      authApi.inviteUser({ projectId, email, owner })
   }
 }

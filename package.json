@@ -12,6 +12,7 @@
     "auth0": "^2.16.0",
     "config": "^3.0.1",
     "express": "^4.16.4",
+    "generate-password": "^1.4.1",
     "graphql": "^14.0.2",
     "jsonwebtoken": "^8.4.0",
     "jwt-decode": "^2.2.0",

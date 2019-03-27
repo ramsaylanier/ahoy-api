@@ -41,4 +41,5 @@ input ProjectInput {
 
 type Mutation {
   createProject(project: ProjectInput): Project
+  inviteUser(projectId: String!, email: String!): Project
 }

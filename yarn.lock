@@ -2211,6 +2211,11 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
+generate-password@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/generate-password/-/generate-password-1.4.1.tgz#33ab0f004d3adbde6c63bfc8bb9798da2a848174"
+  integrity sha512-MwMSkOIKkgYBG3JrquF0m/Rky+pl5jZFNmoroE9bQU5VawFDKdJfxMx1qBthPusx8GQyNWSW0m+Jaw0mZnqApg==
+
 get-stdin@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"

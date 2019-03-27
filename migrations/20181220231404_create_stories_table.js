@@ -4,11 +4,13 @@ exports.up = function(knex, Promise) {
     table.string('title')
     table.text('description')
     table.string('owner')
+    table.specificType('members', 'text ARRAY')
+    table.unique('members')
     table.timestamp('created_at')
     table.timestamp('updated_at')
   })
 }
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('project')
+  return knex.schema.dropTable('projects')
 }

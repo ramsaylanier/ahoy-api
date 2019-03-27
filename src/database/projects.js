@@ -1,4 +1,4 @@
-import { Model } from 'objection'
+import { Model, raw } from 'objection'
 
 class Project extends Model {
   $beforeInsert() {
@@ -30,13 +30,23 @@ export const getProject = id =>
     .first()
 
 export const createProject = async (project, user) => {
-  console.log(user)
   if (!user.id) {
     console.error('not authenticated')
     throw new Error('Not Authenticated')
   }
   project.owner = user.id
   return Project.query().insert(project)
+}
+
+export const addUserToProject = async (projectId, userId) => {
+  if (!userId) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  return Project.query().updateAndFetchById(projectId, {
+    members: raw('array_append(members, ?)', [userId])
+  })
 }
 
 export default { getProjects, getProject }
