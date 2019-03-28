@@ -5,14 +5,15 @@ import {
   createProject,
   getProjectTasks
 } from '../database/projects'
-import { createTask } from '../database/tasks'
+import { createTask, getTask } from '../database/tasks'
 import authApi from '../api/authApi'
 
 export default {
   Query: {
     projects: (_, { userId }) => getProjects(userId),
     project: (_, { id }, context) => getProject(id, context.user.id),
-    user: (_, { id }, context) => authApi.getUser(id, context)
+    user: (_, { id }, context) => authApi.getUser(id, context),
+    task: (_, { id }, context) => getTask(id, context.user.id)
   },
   User: {
     projects: user => getProjects(user.id)

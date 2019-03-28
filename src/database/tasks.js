@@ -45,10 +45,16 @@ export const getTasks = ownerId => {
   }
 }
 
-export const getTask = id =>
-  Task.query()
+export const getTask = (id, userId) => {
+  if (!userId) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  return Task.query()
     .where('id', id)
     .first()
+}
 
 export const createTask = async (task, user) => {
   if (!user.id) {
@@ -61,7 +67,6 @@ export const createTask = async (task, user) => {
     const newTask = await project
       .$relatedQuery('tasks')
       .insert(normalizeTask(task))
-    console.log(newTask)
 
     return newTask
   } catch (err) {
