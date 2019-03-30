@@ -41,10 +41,10 @@ const userApi = {
       throw err
     }
   },
-  inviteUser: async ({ projectId, email, owner }, context) => {
+  inviteUser: async ({ projectId, email, owner }) => {
     const connection = 'Username-Password-Authentication'
 
-    const project = await getProject(projectId)
+    const project = await getProject(projectId, owner.id)
 
     if (owner.id !== project.owner) {
       throw new Error('You are not authorized to invite users to this project.')

@@ -8,7 +8,11 @@ exports.seed = (knex, Promise) => {
         {
           id: 1,
           title: 'This is a project title',
-          description: 'This is a project description'
+          description: 'This is a project description',
+          owner: 'google-oauth2|104564660075265244452',
+          members: [],
+          created_at: new Date(),
+          updated_at: new Date()
         }
       ])
     })

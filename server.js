@@ -39,5 +39,5 @@ const server = new ApolloServer({
 server.applyMiddleware({ app })
 
 app.listen(PORT, () => {
-  console.log(`emojinate-server listening on port ${PORT}`)
+  console.log(`ahoy API server listening on port ${PORT}`)
 })

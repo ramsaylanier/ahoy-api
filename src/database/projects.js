@@ -27,10 +27,11 @@ export class Project extends Model {
   }
 }
 
-export const getProjects = ownerId => {
-  if (ownerId) {
+export const getProjects = userId => {
+  if (userId) {
     return Project.query()
-      .where('owner', ownerId)
+      .where('owner', userId)
+      .orWhere(raw('? = ANY (members)', userId))
       .orderBy('created_at', 'desc')
   } else {
     return Project.query().orderBy('created_at', 'desc')
@@ -45,9 +46,6 @@ export const getProject = async (id, userId) => {
 
   return Project.query()
     .where('id', id)
-    .andWhere(function() {
-      this.where('owner', userId)
-    })
     .first()
 }
 
