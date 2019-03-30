@@ -77,7 +77,9 @@ export const getProjectTasks = async (projectId, userId) => {
 
   try {
     const project = await getProject(projectId, userId)
-    const tasks = await project.$relatedQuery('tasks')
+    const tasks = await project
+      .$relatedQuery('tasks')
+      .orderBy('created_at', 'desc')
     return tasks
   } catch (err) {
     console.log(err)
