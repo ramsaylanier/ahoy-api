@@ -5,7 +5,7 @@ import {
   createProject,
   getProjectTasks
 } from '../database/projects'
-import { createTask, getTask } from '../database/tasks'
+import { createTask, getTask, updateTaskOrder } from '../database/tasks'
 import authApi from '../api/authApi'
 
 export default {
@@ -29,6 +29,8 @@ export default {
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),
     createTask: (_, { task }, { user }) => createTask(task, user),
+    updateTaskOrder: (_, { id, order }, { user }) =>
+      updateTaskOrder(id, order, user),
     inviteUser: (_, { projectId, email }, { user: owner }) =>
       authApi.inviteUser({ projectId, email, owner })
   }

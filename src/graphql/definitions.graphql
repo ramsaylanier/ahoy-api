@@ -20,10 +20,12 @@ type Project {
 
 type Task {
   id: Int!
+  order: Int!
   title: String!
   description: String!
   project: Project!
   created_at: String!
+  updated_at: String!
   completed: Boolean!
   completed_at: String
 }
@@ -31,8 +33,8 @@ type Task {
 type Query {
   user(id: String): User
   projects(userId: String!): [Project]
-  project(id: String!): Project
-  task(id: String!): Task
+  project(id: Int!): Project
+  task(id: Int!): Task
 }
 
 input ProjectInput {
@@ -42,7 +44,7 @@ input ProjectInput {
 
 input TaskInput {
   title: String!
-  projectId: String!
+  projectId: Int!
   description: String!
 }
 
@@ -50,4 +52,5 @@ type Mutation {
   createProject(project: ProjectInput!): Project
   createTask(task: TaskInput!): Task
   inviteUser(projectId: String!, email: String!): Project
+  updateTaskOrder(id: Int!, order: Int!): Int
 }
