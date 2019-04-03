@@ -103,10 +103,9 @@ export const deleteTasks = async (ids, user) => {
   }
 
   try {
-    const deletions = await Task.query()
+    await Task.query()
       .whereIn('id', ids)
       .del()
-    console.log(deletions)
     return ids
   } catch (err) {
     console.log(err)
@@ -120,6 +119,17 @@ export const updateTaskOrder = async (id, order, user) => {
   }
 
   try {
+    const task = await Task.query()
+      .where({ id })
+      .first()
+    const project = await task.$relatedQuery('project')
+
+    if (project.owner !== user.id) {
+      throw new Error(
+        'Not Authorized To Change The Order Of Tasks For This Project'
+      )
+    }
+
     const newTask = await Task.query()
       .update({ order })
       .where({ id })
