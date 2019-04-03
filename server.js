@@ -5,6 +5,7 @@ import resolvers from './src/graphql/resolvers'
 import jwt from 'jsonwebtoken'
 import fetch from 'node-fetch'
 import { certToPEM } from './src/util/authUtil'
+import Config from 'config'
 
 const PORT = 4000
 
@@ -33,6 +34,9 @@ const server = new ApolloServer({
         : null
       return { user }
     }
+  },
+  engine: {
+    apiKey: Config.get('apollo.engine.apiKey')
   }
 })
 

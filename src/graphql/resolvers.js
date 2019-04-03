@@ -9,6 +9,7 @@ import {
   createTask,
   deleteTasks,
   getTask,
+  getTaskProject,
   updateTaskOrder
 } from '../database/tasks'
 import authApi from '../api/authApi'
@@ -30,6 +31,9 @@ export default {
     tasks: (project, args, context) => {
       return getProjectTasks(project.id, context.user.id)
     }
+  },
+  Task: {
+    project: (task, args, context) => getTaskProject(task.id, context.user.id)
   },
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),

@@ -57,6 +57,16 @@ export const getTask = (id, userId) => {
     .first()
 }
 
+export const getTaskProject = async (taskId, userId) => {
+  if (!userId) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  const task = await getTask(taskId, userId)
+  return task.$relatedQuery('project')
+}
+
 export const getTaskCount = async projectId => {
   const { count } = await Task.query()
     .where('project_id', projectId)
