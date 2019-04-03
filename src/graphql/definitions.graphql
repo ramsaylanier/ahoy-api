@@ -51,6 +51,7 @@ input TaskInput {
 type Mutation {
   createProject(project: ProjectInput!): Project
   createTask(task: TaskInput!): Task
+  deleteTasks(ids: [Int]!): [Int]
   inviteUser(projectId: String!, email: String!): Project
   updateTaskOrder(id: Int!, order: Int!): Int
 }

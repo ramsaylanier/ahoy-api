@@ -86,6 +86,23 @@ export const createTask = async (task, user) => {
   }
 }
 
+export const deleteTasks = async (ids, user) => {
+  if (!user.id) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  try {
+    const deletions = await Task.query()
+      .whereIn('id', ids)
+      .del()
+    console.log(deletions)
+    return ids
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const updateTaskOrder = async (id, order, user) => {
   if (!user.id) {
     console.error('not authenticated')

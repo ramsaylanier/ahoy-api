@@ -5,7 +5,12 @@ import {
   createProject,
   getProjectTasks
 } from '../database/projects'
-import { createTask, getTask, updateTaskOrder } from '../database/tasks'
+import {
+  createTask,
+  deleteTasks,
+  getTask,
+  updateTaskOrder
+} from '../database/tasks'
 import authApi from '../api/authApi'
 
 export default {
@@ -29,6 +34,7 @@ export default {
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),
     createTask: (_, { task }, { user }) => createTask(task, user),
+    deleteTasks: (_, { ids }, { user }) => deleteTasks(ids, user),
     updateTaskOrder: (_, { id, order }, { user }) =>
       updateTaskOrder(id, order, user),
     inviteUser: (_, { projectId, email }, { user: owner }) =>
