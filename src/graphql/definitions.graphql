@@ -52,6 +52,6 @@ type Mutation {
   createProject(project: ProjectInput!): Project
   createTask(task: TaskInput!): Task
   deleteTasks(ids: [Int]!): [Int]
-  inviteUser(projectId: String!, email: String!): Project
+  inviteUser(projectId: Int!, email: String!): Project
   updateTaskOrder(id: Int!, order: Int!): Int
 }
