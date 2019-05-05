@@ -7,6 +7,8 @@ import {
 } from '../database/projects'
 import {
   createTask,
+  completeTask,
+  updateTaskDescription,
   deleteTasks,
   getTask,
   getTaskProject,
@@ -38,6 +40,10 @@ export default {
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),
     createTask: (_, { task }, { user }) => createTask(task, user),
+    completeTask: (_, { taskId }, { user }) => completeTask(taskId, user),
+    updateTaskDescription: (_, { taskId, description }, { user }) => {
+      return updateTaskDescription(taskId, description, user)
+    },
     deleteTasks: (_, { ids }, { user }) => deleteTasks(ids, user),
     updateTaskOrder: (_, { id, order }, { user }) =>
       updateTaskOrder(id, order, user),

@@ -36,6 +36,11 @@ const normalizeTask = task => ({
   order: task.order
 })
 
+const isProjectOwnerByTask = async ({ task, userId }) => {
+  const project = await task.$relatedQuery('project')
+  return project.owner === userId
+}
+
 export const getTasks = ownerId => {
   if (ownerId) {
     return Task.query()
@@ -85,12 +90,52 @@ export const createTask = async (task, user) => {
   try {
     const taskCount = await getTaskCount(task.projectId)
     task.order = taskCount + 1
+    task.completed = false
     const project = await getProject(task.projectId, user.id)
     const newTask = await project
       .$relatedQuery('tasks')
       .insert(normalizeTask(task))
 
     return newTask
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const completeTask = async (taskId, user) => {
+  if (!user.id) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  try {
+    const task = await Task.query().findById(taskId)
+
+    if (!isProjectOwnerByTask({ task, userId: user.id })) {
+      throw new Error('Not Authorized To Update This Task')
+    }
+
+    await task.$query().patch({ completed: true })
+    return task
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const updateTaskDescription = async (taskId, description, user) => {
+  if (!user || !user.id) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  try {
+    const task = await Task.query().findById(taskId)
+
+    if (!isProjectOwnerByTask({ task, userId: user.id })) {
+      throw new Error('Not Authorized To Update This Task')
+    }
+    await task.$query().patch({ description })
+    return task
   } catch (err) {
     console.log(err)
   }
@@ -122,12 +167,9 @@ export const updateTaskOrder = async (id, order, user) => {
     const task = await Task.query()
       .where({ id })
       .first()
-    const project = await task.$relatedQuery('project')
 
-    if (project.owner !== user.id) {
-      throw new Error(
-        'Not Authorized To Change The Order Of Tasks For This Project'
-      )
+    if (!isProjectOwnerByTask({ task, userId: user.id })) {
+      throw new Error('Not Authorized To Update This Task')
     }
 
     const newTask = await Task.query()
