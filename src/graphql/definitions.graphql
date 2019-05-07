@@ -50,6 +50,7 @@ input TaskInput {
 
 type Mutation {
   createProject(project: ProjectInput!): Project
+  updateProjectTitle(projectId: Int!, title: String!): Project
   createTask(task: TaskInput!): Task
   completeTask(taskId: Int!): Task
   updateTaskDescription(taskId: Int!, description: String!): Task

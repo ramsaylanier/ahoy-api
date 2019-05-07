@@ -84,4 +84,25 @@ export const getProjectTasks = async (projectId, userId) => {
   }
 }
 
+export const updateProjectTitle = async (projectId, title, user) => {
+  if (!user.id) {
+    console.error('not authenticated')
+    throw new Error('Not Authenticated')
+  }
+
+  try {
+    const project = await getProject(projectId, user.id)
+    console.log(project)
+    if (project.owner !== user.id) {
+      console.error('not creator of project')
+      throw new Error('You Are Not Authorized To Make This Change')
+    }
+
+    await project.$query().patch({ title })
+    return project
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default { getProjects, getProject }

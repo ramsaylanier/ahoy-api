@@ -115,7 +115,7 @@ export const completeTask = async (taskId, user) => {
       throw new Error('Not Authorized To Update This Task')
     }
 
-    await task.$query().patch({ completed: true })
+    await task.$query().patch({ completed: !task.completed })
     return task
   } catch (err) {
     console.log(err)
