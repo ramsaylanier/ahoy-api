@@ -16,6 +16,9 @@ import {
   updateTaskOrder
 } from '../database/tasks'
 import authApi from '../api/authApi'
+import { PubSub } from 'graphql-subscriptions'
+
+export const pubsub = new PubSub()
 
 export default {
   Query: {
@@ -40,8 +43,13 @@ export default {
   },
   Mutation: {
     createProject: (_, { project }, { user }) => createProject(project, user),
-    updateProjectTitle: (_, { projectId, title }, { user }) =>
-      updateProjectTitle(projectId, title, user),
+    updateProjectTitle: async (_, { projectId, title }, { user }) => {
+      const project = await updateProjectTitle(projectId, title, user)
+      pubsub.publish('projectTitleUpdated', {
+        projectTitleUpdated: { ...project }
+      })
+      return project
+    },
     createTask: (_, { task }, { user }) => createTask(task, user),
     completeTask: (_, { taskId }, { user }) => completeTask(taskId, user),
     updateTaskDescription: (_, { taskId, description }, { user }) => {
@@ -52,5 +60,10 @@ export default {
       updateTaskOrder(id, order, user),
     inviteUser: (_, { projectId, email }, { user: owner }) =>
       authApi.inviteUser({ projectId, email, owner })
+  },
+  Subscription: {
+    projectTitleUpdated: {
+      subscribe: () => pubsub.asyncIterator('projectTitleUpdated')
+    }
   }
 }

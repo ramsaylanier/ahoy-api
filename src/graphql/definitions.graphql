@@ -58,3 +58,7 @@ type Mutation {
   inviteUser(projectId: Int!, email: String!): Project
   updateTaskOrder(id: Int!, order: Int!): Int
 }
+
+type Subscription {
+  projectTitleUpdated: Project
+}

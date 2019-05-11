@@ -92,7 +92,6 @@ export const updateProjectTitle = async (projectId, title, user) => {
 
   try {
     const project = await getProject(projectId, user.id)
-    console.log(project)
     if (project.owner !== user.id) {
       console.error('not creator of project')
       throw new Error('You Are Not Authorized To Make This Change')
