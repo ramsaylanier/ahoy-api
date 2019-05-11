@@ -8,6 +8,7 @@
     "start:watch": "nodemon --exec npm run start"
   },
   "dependencies": {
+    "apollo-server": "^2.4.8",
     "apollo-server-express": "^2.4.8",
     "auth0": "^2.16.0",
     "config": "^3.0.1",
